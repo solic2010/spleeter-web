@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import * as React from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Alert, Button, Modal } from 'react-bootstrap';
 
 interface Props {
   isDeleting: boolean;
@@ -30,10 +30,13 @@ class DeleteTaskModal extends React.Component<Props, {}> {
           <Modal.Title>Confirm deletion</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <Alert variant="danger">
+            <div>Functionality disabled for demo purposes.</div>
+          </Alert>
           <div>Are you sure you want to delete this mix?</div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" disabled={this.props.isDeleting} onClick={this.submit}>
+          <Button variant="danger" disabled>
             Delete
           </Button>
         </Modal.Footer>

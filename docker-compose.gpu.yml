@@ -33,6 +33,7 @@ services:
       - staticfiles:/webapp/staticfiles
     environment:
       - API_HOST=api
+      - TEMPLATE=default.conf.template
     depends_on:
       - api
     restart: always

@@ -1,4 +1,7 @@
 FROM nginx:stable-alpine
 
-COPY default.conf.template /etc/nginx/templates/
+# ARG TEMPLATE
 ENV API_HOST=api
+
+COPY $TEMPLATE /etc/nginx/templates/
+RUN ls /etc/nginx/templates/

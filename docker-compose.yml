@@ -30,8 +30,11 @@ services:
     image: jeffreyca/spleeter-web-nginx:${TAG:-latest}
     volumes:
       - staticfiles:/webapp/staticfiles
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
     environment:
       - API_HOST=api
+      - TEMPLATE=default.conf.template
     depends_on:
       - api
     restart: always

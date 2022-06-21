@@ -1,0 +1,26 @@
+version: '3.4'
+services:
+  nginx:
+    environment:
+      - API_HOST=api
+      - TEMPLATE=default.ssl.conf.template
+      - APP_HOST
+      - CERTBOT_EMAIL
+    depends_on:
+      - api
+    volumes:
+      - staticfiles:/webapp/staticfiles
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+    restart: always
+  certbot:
+    image: certbot/certbot:latest
+    environment:
+      - APP_HOST
+      - CERTBOT_EMAIL
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+    restart: "no"
+    # command: "if [[ -z $APP_HOST ]] || [[ -z $CERTBOT_EMAIL ]]; then echo 'Please set the APP_HOST and CERTBOT_EMAIL environment variables.'; else certonly --webroot -w /var/www/certbot --force-renewal --email $CERTBOT_EMAIL -d $APP_HOST --agree-tos; fi"
+    command: "certonly --webroot -w /var/www/certbot --force-renewal --email $CERTBOT_EMAIL -d $APP_HOST --agree-tos --non-interactive"
